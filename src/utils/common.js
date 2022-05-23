@@ -63,11 +63,11 @@ exports.getVideo = async (searchKey, url) => {
   });
 };
 
-exports.getVideoList = async (params = {}) => {
+exports.getVideoList = async (res = {}) => {
   return new Promise(function (resolve, reject) {
     let params = {
       pageNum: 1,
-      key: "哪吒之魔童降世",
+      key: res.key,
       channel_name: "电影",
       duration_level: 0,
       need_qc: 0,
