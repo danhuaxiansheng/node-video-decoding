@@ -11,8 +11,11 @@ exports.getVideoList = async (req, res) => {
     key: req.body.key || "",
   };
 
-  getVideoList(params).then((result) => {
-    debugger;
-    res.send({ code: 200, msg: "查询成功。", data: result.data });
-  });
+  getVideoList(params)
+    .then((result) => {
+      res.send({ code: 200, msg: "查询成功。", data: result.data });
+    })
+    .catch((d) => {
+      res.send({ code: 500, msg: "接口查询失败。" });
+    });
 };

@@ -1,6 +1,6 @@
 const crawler = require("crawler");
 const cheerio = require("cheerio");
-
+const { setGetParams } = require("./url.js");
 const request = require("./request.js");
 
 // 获取视频
@@ -63,14 +63,6 @@ exports.getVideo = async (searchKey, url) => {
   });
 };
 
-function setGetParams(url, params = {}) {
-  let list = [];
-  Object.keys(params).forEach((d) => {
-    list.push(d + "=" + params[d] ?? "");
-  });
-  return url + "?" + escape(list.join("&"));
-}
-
 exports.getVideoList = async (params = {}) => {
   return new Promise(function (resolve, reject) {
     let params = {
@@ -85,15 +77,21 @@ exports.getVideoList = async (params = {}) => {
       bitrate: null,
       af: 1,
     };
-    debugger;
+
     let url = setGetParams(
       "https://pcw-api.iqiyi.com/strategy/pcw/data/soBaseCardLeftSide",
       params
     );
-
-    request.get(url).then((res) => {
-      let data = JSON.parse(result).data;
-      resolve({ code: 200, msg: "查询成功。", data: data });
-    });
+    request
+      .get(url)
+      .then((result) => {
+        let formatData = JSON.parse(result).data?.formatData ?? {};
+        let list = formatData?.list ?? [];
+        let data = list.filter((d) => d.tag === params.channel_name);
+        resolve({ code: 200, msg: "查询成功。", data: data });
+      })
+      .catch((d) => {
+        reject({ code: 500, msg: "请求失败" });
+      });
   });
 };
