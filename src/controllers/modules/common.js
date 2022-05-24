@@ -1,4 +1,4 @@
-const { getVideo, getVideoList } = require("../../utils/common");
+const { getVideo, getDataList } = require("../../utils/common");
 
 exports.getVideo = async (req, res) => {
   getVideo(unescape(req.body.baseUrl || "")).then((result) => {
@@ -6,12 +6,12 @@ exports.getVideo = async (req, res) => {
   });
 };
 
-exports.getVideoList = async (req, res) => {
+exports.getDataList = async (req, res) => {
   let params = {
-    key: req.body.key || "",
+    key: req.body.keywords || "",
   };
 
-  getVideoList(params)
+  getDataList(params)
     .then((result) => {
       res.send({ code: 200, msg: "查询成功。", data: result.data });
     })

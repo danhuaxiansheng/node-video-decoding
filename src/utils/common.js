@@ -64,7 +64,7 @@ exports.getVideo = async (searchKey, url) => {
 };
 
 // 获取电影列表
-exports.getVideoList = async (res = {}) => {
+exports.getDataList = async (res = {}) => {
   return new Promise(function (resolve, reject) {
     let params = {
       pageNum: 1,
