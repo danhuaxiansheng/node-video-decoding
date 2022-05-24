@@ -46,12 +46,18 @@ exports.getMovieList = async (key) => {
         let list = formatData?.list ?? [];
         let data = list.filter((d) => d.tag === params.channel_name);
         data = data.map((d) => {
+          // d.g_img 是默认图片，加上尺寸g_img_size动态请求分辨率会更精准
+          let imgSrc = d.g_img.replace(
+            ".jpg",
+            '_'+d.g_img_size.split(",")[0] + ".jpg"
+          );
+
           return {
             desc: d.desc, //描述;
             actor: d.actor, // 主演
             director: d.director, // 导演
             alias: d.alias, // 别名
-            imgSrc: d.g_img, // 图片路径
+            imgSrc: imgSrc, // 图片路径
             title: d.g_title, // 电影名称
             palyTime: d.g_meta, // 播放时长
             region: d.region, // 地区
@@ -62,6 +68,7 @@ exports.getMovieList = async (key) => {
             year: d.year, // 首映年度
             releaseTime: d.releaseTime, // 上映时间
             palySrc: d.g_main_link, // 播放路径
+            videoinfos: d.videoinfos, // 集数
           };
         });
         resolve({ code: 200, msg: "查询成功。", data: data });
