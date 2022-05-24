@@ -1,7 +1,7 @@
 const { getVideo, getDataList } = require("../../utils/common");
 
 exports.getVideo = async (req, res) => {
-  getVideo(unescape(req.body.url || "")).then((result) => {
+  getVideo(decodeURI(req.body.url || "")).then((result) => {
     res.send({ code: 200, msg: "查询成功。", data: result.data });
   });
 };
