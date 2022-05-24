@@ -8,7 +8,7 @@ exports.getVideo = async (req, res) => {
 
 exports.getDataList = async (req, res) => {
   let params = {
-    key: req.body.keywords || "",
+    keywords: req.body.keywords || "",
   };
 
   getDataList(params)
