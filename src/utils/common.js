@@ -21,8 +21,7 @@ exports.getVideo = async (url) => {
     if (!url) {
       reject({ code: 500, msg: "参数错误!" });
     } else {
-      let referer =
-        "https://m3u8.okjx.cc:3389/13jx.php?url=https://www.iqiyi.com/v_1pdntwc66rs.html";
+      let referer = "https://m3u8.okjx.cc:3389/13jx.php?url=" + url;
 
       crawler_1.queue({
         //书目录地址
@@ -47,7 +46,6 @@ exports.getVideo = async (url) => {
           htmlN = htmlN.substring(7, htmlN.indexOf('",'));
           catchUrl = `https://api.nxflv.com/Cache/M3u8/${htmlN}.m3u8`;
           //目录数组
-          debugger;
           resolve({
             code: 200,
             msg: "读取完毕",
