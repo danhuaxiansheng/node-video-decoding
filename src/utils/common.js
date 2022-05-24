@@ -21,11 +21,12 @@ exports.getVideo = async (url) => {
     if (!url) {
       reject({ code: 500, msg: "参数错误!" });
     } else {
+      let reqUrl = "https://m3u8.okjx.cc:3389/m13.php?url=" + url;
       let referer = "https://m3u8.okjx.cc:3389/13jx.php?url=" + url;
 
       crawler_1.queue({
         //书目录地址
-        url: url,
+        url: reqUrl,
         //模仿客户端访问
         headers: {
           Referer: referer,
@@ -38,13 +39,10 @@ exports.getVideo = async (url) => {
           }
           //获取文本并且解析
           let $ = cheerio.load(res.body.toString());
-          let catchUrl = "";
-          let htmlN = $.html().substring(
-            $.html().indexOf('"id": "'),
-            $.html().length
-          );
+          let html = $.html();
+          let htmlN = html.substring(html.indexOf('"id": "'), html.length);
           htmlN = htmlN.substring(7, htmlN.indexOf('",'));
-          catchUrl = `https://api.nxflv.com/Cache/M3u8/${htmlN}.m3u8`;
+          let catchUrl = `https://api.nxflv.com/Cache/M3u8/${htmlN}.m3u8`;
           //目录数组
           resolve({
             code: 200,
