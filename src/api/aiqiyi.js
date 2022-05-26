@@ -36,6 +36,22 @@ exports.getMovieList = async (key) => {
     bitrate: null,
     af: 1,
   };
+
+  // 查询全部
+  // pageNum: 1
+  // key: 凡人修仙
+
+  // pageNum: 1
+  // key: 凡人修仙传
+  // channel_name: 电视剧
+  // duration_level: 0
+  // need_qc: 0
+  // site_publish_date_level:
+  // site: iqiyi
+  // mode: 1
+  // bitrate:
+  // af: 1
+
   let url = setGetParams(baseUrl, params);
 
   return new Promise(function (resolve, reject) {
