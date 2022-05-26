@@ -19,11 +19,11 @@ const request = require("../utils/request.js");
 //   palySrc: "", // 播放路径
 // };
 
-const baseUrl =
-  "https://pcw-api.iqiyi.com/strategy/pcw/data/soBaseCardLeftSide";
-
 // 获取电影列表
 exports.getMovieList = async (key) => {
+  const baseUrl =
+    "https://pcw-api.iqiyi.com/strategy/pcw/data/soBaseCardLeftSide";
+
   let params = {
     pageNum: 1,
     key: key,
@@ -49,7 +49,7 @@ exports.getMovieList = async (key) => {
           // d.g_img 是默认图片，加上尺寸g_img_size动态请求分辨率会更精准
           let imgSrc = d.g_img.replace(
             ".jpg",
-            '_'+d.g_img_size.split(",")[0] + ".jpg"
+            "_" + d.g_img_size.split(",")[0] + ".jpg"
           );
 
           return {
@@ -79,6 +79,26 @@ exports.getMovieList = async (key) => {
   });
 };
 
-
-
-
+// 获取视频列表
+exports.getVideoByGDD = async (key) => {
+  // http://www.gddyu.com/ --够低调网
+  const videoListUrl = "https://a1.m1907.cn/api/v/";
+  let params = {
+    z: "e8e56ecaca35c6229baa93884b6b7323",
+    jx: key,
+    s1ig: 11401,
+    g: null,
+  };
+  let url = setGetParams(videoListUrl, params);
+  return new Promise(function (resolve, reject) {
+    request
+      .get(url)
+      .then((result) => {
+        let data = JSON.parse(result).data;
+        resolve({ code: 200, msg: "查询成功。", data: data });
+      })
+      .catch((d) => {
+        reject({ code: 500, msg: "请求失败" });
+      });
+  });
+};

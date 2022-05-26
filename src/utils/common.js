@@ -1,7 +1,7 @@
 const crawler = require("crawler");
 const cheerio = require("cheerio");
 
-const { getMovieList } = require("../api/aiqiyi.js");
+const { getMovieList, getVideoByGDD } = require("../api/aiqiyi.js");
 // 获取电影列表
 exports.getDataList = async (res = {}) => {
   return getMovieList(res.keywords);
@@ -53,4 +53,9 @@ exports.getVideo = async (url) => {
       });
     }
   });
+};
+
+// 获取书籍目录
+exports.getVideoAnalysis = async (url) => {
+  return getVideoByGDD(url);
 };
