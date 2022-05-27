@@ -26,6 +26,7 @@ exports.getMovieList = async (key) => {
 
   let tagNames = ["电影", "电视剧", "动漫", "综艺", "记录片", "脱口秀"];
   let siteList = ["爱奇艺", "腾讯", "优酷", "bilibili"];
+  let imgReplace = ["爱奇艺", "bilibili"];
 
   let params = {
     pageNum: 1,
@@ -34,7 +35,7 @@ exports.getMovieList = async (key) => {
 
   function getImgUrl(d) {
     let imgSrc = d.g_img;
-    if (d.siteName === "爱奇艺") {
+    if (imgReplace.includes(d.siteName)) {
       // d.g_img 是默认图片，加上尺寸g_img_size动态请求分辨率会更精准
       if (d.g_img_size) {
         imgSrc = d.g_img.replace(
