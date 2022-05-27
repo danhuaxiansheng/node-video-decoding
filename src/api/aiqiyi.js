@@ -103,8 +103,12 @@ exports.getVideoByGDD = async (key) => {
     request
       .get(url)
       .then((result) => {
-        let data = JSON.parse(result).data;
-        resolve({ code: 200, msg: "查询成功。", data: data });
+        if (result.indexOf("{") === -1) {
+          reject({ code: 500, msg: "请求参数已更改，请更新资源！" });
+        } else {
+          let data = JSON.parse(result).data;
+          resolve({ code: 200, msg: "查询成功。", data: data });
+        }
       })
       .catch((d) => {
         reject({ code: 500, msg: "请求失败" });
