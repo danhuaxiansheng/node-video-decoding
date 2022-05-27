@@ -25,7 +25,7 @@ exports.getMovieList = async (key) => {
     "https://pcw-api.iqiyi.com/strategy/pcw/data/soBaseCardLeftSide";
 
   let tagNames = ["电影", "电视剧", "动漫", "综艺", "记录片", "脱口秀"];
-
+  debugger;
   let params = {
     pageNum: 1,
     key: key,
@@ -54,6 +54,18 @@ exports.getMovieList = async (key) => {
   // bitrate:
   // af: 1
 
+  function getImgUrl(d) {
+    let imgSrc = d.g_img;
+    if (d.siteName === "爱奇艺") {
+      // d.g_img 是默认图片，加上尺寸g_img_size动态请求分辨率会更精准
+      imgSrc = d.g_img.replace(
+        ".jpg",
+        "_" + d.g_img_size.split(",")[0] + ".jpg"
+      );
+    }
+    return imgSrc;
+  }
+
   let url = setGetParams(baseUrl, params);
 
   return new Promise(function (resolve, reject) {
@@ -65,10 +77,7 @@ exports.getMovieList = async (key) => {
         let data = list.filter((d) => tagNames.includes(d.tag));
         data = data.map((d) => {
           // d.g_img 是默认图片，加上尺寸g_img_size动态请求分辨率会更精准
-          let imgSrc = d.g_img.replace(
-            ".jpg",
-            "_" + d.g_img_size.split(",")[0] + ".jpg"
-          );
+          let imgSrc = getImgUrl(d);
 
           return {
             desc: d.desc, //描述;
