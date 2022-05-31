@@ -17,13 +17,14 @@ exports.getVideo = async (url) => {
     maxConnections: 1, //只有在rateLimit == 0时起作用，限制并发数
     jQuery: false,
   });
+  debugger;
   return new Promise(function (resolve, reject) {
     if (!url) {
       reject({ code: 500, msg: "参数错误!" });
     } else {
+      // ok解析
       let reqUrl = "https://m3u8.okjx.cc:3389/m13.php?url=" + url;
       let referer = "https://m3u8.okjx.cc:3389/13jx.php?url=" + url;
-
       crawler_1.queue({
         //书目录地址
         url: reqUrl,
@@ -58,4 +59,11 @@ exports.getVideo = async (url) => {
 // 获取书籍目录
 exports.getVideoAnalysis = async (url) => {
   return getVideoByGDD(url);
+};
+
+exports.getVideoAllLink = async (url) => {
+  var jsonData = {
+    // "http://okjx.cc/?url=", // 有效 但资源不是最新
+    //  "https://z1.m1907.cn/?jx=" // 有效 需要更新令牌
+  };
 };

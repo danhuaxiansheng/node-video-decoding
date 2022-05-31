@@ -22,7 +22,7 @@ const request = require("../utils/request.js");
 // 获取电影列表
 exports.getMovieList = async (key) => {
   const baseUrl =
-    "https://pcw-api.iqiyi.com/strategy/pcw/data/soBaseCardLeftSide";
+    "https://pcw-api.iqiyi.com/strategy/pcw/data/soBaseCardLeftSide"; // 爱奇艺的查询接口
 
   let tagNames = ["电影", "电视剧", "动漫", "综艺", "记录片", "脱口秀"];
   let siteList = ["爱奇艺", "腾讯", "优酷", "bilibili"];
