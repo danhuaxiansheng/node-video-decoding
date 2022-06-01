@@ -17,7 +17,6 @@ exports.getVideo = async (url) => {
     maxConnections: 1, //只有在rateLimit == 0时起作用，限制并发数
     jQuery: false,
   });
-  debugger;
   return new Promise(function (resolve, reject) {
     if (!url) {
       reject({ code: 500, msg: "参数错误!" });

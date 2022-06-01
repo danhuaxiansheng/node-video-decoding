@@ -17,6 +17,7 @@ const request = require("../utils/request.js");
 //   year: "", // 首映年度
 //   releaseTime: "", // 上映时间
 //   palySrc: "", // 播放路径
+//   hasVip:false // 是否为vip视频
 // };
 
 // 获取电影列表
@@ -73,6 +74,7 @@ exports.getMovieList = async (key) => {
             reason: d.reason, // 热度排行
             score: d.score, // 电影分数
             tag: d.tag, // 所属类别（电影）
+            hasVip: d.hasVip, // 是否是vip资源
             siteName: d.siteName, // 网站名称
             year: d.year, // 首映年度
             releaseTime: d.releaseTime, // 上映时间
