@@ -66,3 +66,44 @@ exports.getVideoAllLink = async (url) => {
     //  "https://z1.m1907.cn/?jx=" // 有效 需要更新令牌
   };
 };
+
+// 获取爱奇艺普通视频
+exports.getVideoHtmlbyAQY = async (url) => {
+  var crawler_1 = new crawler({
+    encoding: null,
+    method: "get",
+    priority: 5, //queue请求优先级，模拟用户行为
+    timeout: 10000, //10s req无响应，req失败
+    maxConnections: 1, //只有在rateLimit == 0时起作用，限制并发数
+    jQuery: false,
+  });
+  debugger;
+  return new Promise(function (resolve, reject) {
+    if (!url) {
+      reject({ code: 500, msg: "参数错误!" });
+    } else {
+      crawler_1.queue({
+        url: url,
+        //模仿客户端访问
+        headers: { Referer: url, "User-Agent": "requests" },
+        callback: function (err, res, done) {
+          if (err) {
+            reject({ code: 500, msg: "获取失败" });
+            return;
+          }
+          debugger;
+          //获取文本并且解析
+          let $ = cheerio.load(res.body.toString());
+          let html = $.html();
+
+          //目录数组
+          resolve({
+            code: 200,
+            msg: "读取完毕",
+            data: catchUrl,
+          });
+        },
+      });
+    }
+  });
+};
