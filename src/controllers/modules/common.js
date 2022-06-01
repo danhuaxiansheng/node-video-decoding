@@ -2,6 +2,7 @@ const {
   getVideo,
   getVideoAnalysis,
   getDataList,
+  getVideoHtmlbyAQY,
 } = require("../../utils/common");
 
 exports.getVideo = async (req, res) => {
