@@ -77,7 +77,6 @@ exports.getVideoHtmlbyAQY = async (url) => {
     maxConnections: 1, //只有在rateLimit == 0时起作用，限制并发数
     jQuery: false,
   });
-  debugger;
   return new Promise(function (resolve, reject) {
     if (!url) {
       reject({ code: 500, msg: "参数错误!" });
@@ -91,16 +90,16 @@ exports.getVideoHtmlbyAQY = async (url) => {
             reject({ code: 500, msg: "获取失败" });
             return;
           }
-          debugger;
+
           //获取文本并且解析
           let $ = cheerio.load(res.body.toString());
           let html = $.html();
-
+          debugger;
           //目录数组
           resolve({
             code: 200,
             msg: "读取完毕",
-            data: catchUrl,
+            data: url,
           });
         },
       });
