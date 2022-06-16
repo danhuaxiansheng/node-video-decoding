@@ -22,6 +22,6 @@ exports.getVideoHtmlbyAQY = async (req, res) => {
 // 通过url映射数据源
 exports.getUrlSourse = async (req, res) => {
   getUrlSourse(req.query.url)
-    .then((d) => res.send({ code: 200, msg: "查询成功。", data: d.data }))
-    .catch(() => res.send({ code: 500, msg: "接口查询失败。" }));
+    .then((d) => res.send({ ...success, data: d.data }))
+    .catch(() => res.send(error));
 };

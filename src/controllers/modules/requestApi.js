@@ -11,6 +11,13 @@ exports.getUrlSourse = async (url) => {
       .get(apiUrl)
       .then((result) => {
         let data = JSON.parse(result).data ?? [];
+        data = data.map((d) => {
+          return {
+            name: d.name,
+            source: d.source.eps,
+            year: d.year,
+          };
+        });
         resolve({ code: 200, msg: "查询成功。", data: data });
       })
       .catch((d) => {
