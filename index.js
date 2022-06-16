@@ -10,9 +10,7 @@ const http = require("http");
 
 const { port } = require("./src/setting");
 
-
 app.set('port', port || 3000);
-
 
 //设置跨域访问
 app.all("*", function (req, res, next) {
@@ -42,10 +40,6 @@ app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 app.use(multer({ dest: "./public/temp/" }).any());
 
 require("./src/routes/index.js")(app);
-// set port, listen for requests
-// app.listen(port, function () {
-//   console.log("Server is running http://localhost:" + port);
-// });
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("服务器已经启动: http://localhost:" + app.get('port'));

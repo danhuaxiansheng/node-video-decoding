@@ -90,33 +90,4 @@ exports.getMovieList = async (key) => {
   });
 };
 
-// 获取视频列表
-exports.getVideoByGDD = async (key) => {
-  // http://www.gddyu.com/ --够低调网
-  const videoListUrl = "https://a1.m1907.cn/api/v/";
-  let params = {
-    z: "e8e56ecaca35c6229baa93884b6b7323",
-    jx: key,
-    s1ig: 11401,
-    g: null,
-  };
-  let url = setGetParams(videoListUrl, params);
-  return new Promise(function (resolve, reject) {
-    request
-      .get(url)
-      .then((result) => {
-        if (result.indexOf("{") === -1) {
-          reject({ code: 500, msg: "请求参数已更改，请更新资源！" });
-        } else {
-          let data = JSON.parse(result).data;
-          resolve({ code: 200, msg: "查询成功。", data: data });
-        }
-      })
-      .catch((d) => {
-        reject({ code: 500, msg: "请求失败" });
-      });
-  });
-};
 
-// https://m3u8.okjx.cc:3389/m13.php?url=https://www.iqiyi.com/v_1pdntwc66rs.html
-// 防盗链
