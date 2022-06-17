@@ -1,13 +1,25 @@
 const cheerio = require("cheerio");
-const crawler = require("../../utils/crawler.js");
+// const crawler = require("../../utils/crawler.js");
+const crawler = require("crawler");
 
 // 获取爱奇艺普通视频
 exports.getVideoHtmlbyAQY = async (url) => {
+  let options = {
+    encoding: null,
+    method: "get",
+    priority: 5, //queue请求优先级，模拟用户行为
+    timeout: 10000, //10s req无响应，req失败
+    maxConnections: 1, //只有在rateLimit == 0时起作用，限制并发数
+    jQuery: false,
+  };
+
+  const crawler1 = new crawler(options);
+
   return new Promise(function (resolve, reject) {
     if (!url) {
       reject({ code: 500, msg: "参数错误!" });
     } else {
-      crawler.queue({
+      crawler1.queue({
         url: url,
         //模仿客户端访问
         headers: { Referer: url, "User-Agent": "requests" },
@@ -35,8 +47,17 @@ exports.getVideoHtmlbyAQY = async (url) => {
 // 获取爱奇艺首页 热门
 exports.getMovieIndex = async () => {
   const url = "https://www.iqiyi.com";
+  let options = {
+    encoding: null,
+    method: "get",
+    priority: 5, //queue请求优先级，模拟用户行为
+    timeout: 10000, //10s req无响应，req失败
+    maxConnections: 1, //只有在rateLimit == 0时起作用，限制并发数
+    jQuery: false,
+  };
+  const crawler1 = new crawler(options);
   return new Promise(function (resolve, reject) {
-    crawler.queue({
+    crawler1.queue({
       url: url,
       //模仿客户端访问
       headers: { Referer: url, "User-Agent": "requests" },
@@ -64,7 +85,6 @@ exports.getMovieIndex = async () => {
           } else if (type.includes("zongyi")) {
             list = variety;
           }
-
           $liArr.toArray().forEach((d) => {
             let $dom = $(d);
             list.push({
