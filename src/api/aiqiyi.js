@@ -93,5 +93,3 @@ exports.getMovieList = async (key) => {
       });
   });
 };
-
-
