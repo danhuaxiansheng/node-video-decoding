@@ -1,4 +1,4 @@
-
+const cheerio = require("cheerio");
 const crawler = require("../../utils/crawler.js");
 
 // 获取爱奇艺普通视频
@@ -16,7 +16,6 @@ exports.getVideoHtmlbyAQY = async (url) => {
             reject({ code: 500, msg: "获取失败" });
             return;
           }
-
           //获取文本并且解析
           let $ = cheerio.load(res.body.toString());
           let html = $.html();
