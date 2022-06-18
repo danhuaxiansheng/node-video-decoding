@@ -1,5 +1,6 @@
 const cheerio = require("cheerio");
-// const crawler = require("../../utils/crawler.js");
+// 异步请求
+const puppeteer = require("puppeteer"); //github传送门 官网传送门
 const crawler = require("crawler");
 
 // 获取爱奇艺普通视频
@@ -44,6 +45,66 @@ exports.getVideoHtmlbyAQY = async (url) => {
   });
 };
 
+function htmlUtils($) {
+  const $panle = $(".content-wrap .ch-res>.tl-layout[data-block-v2]");
+  let tv = [];
+  let movie = [];
+  let variety = [];
+  let tag = "";
+  $panle.toArray().forEach((element) => {
+    let type = element.attribs["data-block-v2"];
+    let $liArr = $(element).find(".qy-mod-list ul li");
+    let list = [];
+
+    if (type.includes("dianshiju")) {
+      list = tv;
+      tag = "电视剧";
+    } else if (type.includes("dianying")) {
+      list = movie;
+      tag = "电影";
+    } else if (type.includes("zongyi")) {
+      list = variety;
+      tag = "综艺";
+    }
+    $liArr.toArray().forEach((d) => {
+      let $dom = $(d);
+      list.push({
+        url: $dom.find(".qy-mod-link-wrap a").attr("href"),
+        imgSrc: $dom.find(".qy-mod-link-wrap picture img").attr("src"),
+        name: $dom.find(".title-wrap a").text(),
+        desc: $dom.find(".title-wrap .sub").text(),
+        tag: tag,
+      });
+    });
+  });
+  return { tv, movie, variety };
+}
+
+// var getTimeOutHtml = (url) => {
+//   debugger;
+//   return new Promise(async function (resolve, reject) {
+//     const browser = await puppeteer.launch({ args: ["--no-sandbox"] });
+//     const page = await browser.newPage();
+//     await page.goto(url);
+
+//     setTimeout(async function () {
+//       const bodyHandle = await page.$("body");
+//       const html = await page.evaluate((body) => body.innerHTML, bodyHandle);
+//       let $ = cheerio.load(html);
+//       const data = htmlUtils($);
+//       await bodyHandle.dispose();
+//       await browser.close();
+
+//       //目录数组
+//       resolve({
+//         code: 200,
+//         msg: "读取完毕",
+//         data: data,
+//       });
+//     }, 500);
+//   });
+// };
+
 // 获取爱奇艺首页 热门
 exports.getMovieIndex = async () => {
   const url = "https://www.iqiyi.com";
@@ -68,38 +129,12 @@ exports.getMovieIndex = async () => {
         }
         //获取文本并且解析
         const $ = cheerio.load(res.body.toString());
-        const $panle = $(".content-wrap .ch-res>.tl-layout[data-block-v2]");
-        let tv = [];
-        let movie = [];
-        let variety = [];
-
-        $panle.toArray().forEach((element) => {
-          let type = element.attribs["data-block-v2"];
-          let $liArr = $(element).find(".qy-mod-list ul li");
-          let list = [];
-
-          if (type.includes("dianshiju")) {
-            list = tv;
-          } else if (type.includes("dianying")) {
-            list = movie;
-          } else if (type.includes("zongyi")) {
-            list = variety;
-          }
-          $liArr.toArray().forEach((d) => {
-            let $dom = $(d);
-            list.push({
-              url: "https:" + $dom.find(".qy-mod-link-wrap a").attr("href"),
-              imgSrc: "https:" + $dom.find(".qy-mod-link-wrap img").attr("src"),
-              name: $dom.find(".title-wrap a").text(),
-              desc: $dom.find(".title-wrap .sub").text(),
-            });
-          });
-        });
+        const data = htmlUtils($);
         //目录数组
         resolve({
           code: 200,
           msg: "读取完毕",
-          data: { tv, movie, variety },
+          data: data,
         });
       },
     });
