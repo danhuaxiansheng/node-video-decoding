@@ -88,7 +88,7 @@ exports.getMovieIndex = async () => {
           $liArr.toArray().forEach((d) => {
             let $dom = $(d);
             list.push({
-              url: url + $dom.find(".qy-mod-link-wrap a").attr("href"),
+              url: "https:" + $dom.find(".qy-mod-link-wrap a").attr("href"),
               imgSrc: "https:" + $dom.find(".qy-mod-link-wrap img").attr("src"),
               name: $dom.find(".title-wrap a").text(),
               desc: $dom.find(".title-wrap .sub").text(),
