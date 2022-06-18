@@ -80,10 +80,6 @@ exports.getMovieList = async (key) => {
             releaseTime: d.releaseTime, // 上映时间
             palySrc: d.g_main_link, // 播放路径
             videoinfos: d.videoinfos, // 集数
-            // isPay: true
-            // name: "萧十一郎10"
-            // order: 10
-            // url: "http://v.youku.com/v_show/id_XMTE5NTU1MjI4.html"
           };
         });
         resolve({ code: 200, msg: "查询成功。", data: data });
