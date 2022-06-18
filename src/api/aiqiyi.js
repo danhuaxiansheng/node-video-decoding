@@ -26,7 +26,7 @@ exports.getMovieList = async (key) => {
     "https://pcw-api.iqiyi.com/strategy/pcw/data/soBaseCardLeftSide"; // 爱奇艺的查询接口
 
   let tagNames = ["电影", "电视剧", "动漫", "综艺", "记录片", "脱口秀"];
-  let siteList = ["爱奇艺", "腾讯", "优酷", "bilibili"];
+  let siteList = ["爱奇艺", "腾讯", "优酷", "bilibili", "芒果tv"];
   let imgReplace = ["爱奇艺", "bilibili"];
 
   let params = {

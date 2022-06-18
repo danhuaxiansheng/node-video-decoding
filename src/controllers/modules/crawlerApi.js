@@ -68,8 +68,9 @@ function htmlUtils($) {
     }
     $liArr.toArray().forEach((d) => {
       let $dom = $(d);
+      let href = $dom.find(".qy-mod-link-wrap a").attr("href");
       list.push({
-        url: $dom.find(".qy-mod-link-wrap a").attr("href"),
+        url: href.includes("https:") ? href : "https:" + href,
         imgSrc: $dom.find(".qy-mod-link-wrap picture img").attr("src"),
         name: $dom.find(".title-wrap a").text(),
         desc: $dom.find(".title-wrap .sub").text(),
