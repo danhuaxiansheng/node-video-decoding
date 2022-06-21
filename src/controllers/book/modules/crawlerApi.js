@@ -242,7 +242,7 @@ exports.booksIndexList = async () => {
 };
 
 // 获取榜单数据 某一列数据
-function getTopListAttr($list) {
+function getTopListAttr($list,$) {
   let list = [];
   $list.each((inx, $item) => {
     let $dom = $($item).find("a:first");
@@ -268,7 +268,7 @@ function getTopList($) {
     let ob = {
       title: $dom.find("h3.wrap-title").text(),
       href: $dom.find("h3.wrap-title a:first").attr("href"),
-      list: getTopListAttr(dList),
+      list: getTopListAttr(dList,$),
     };
     list.push(ob);
   });
@@ -287,7 +287,7 @@ function getHotList($) {
     }
     let ob = {
       title: $dom.find("h3.wrap-title").text(),
-      list: getHotListAttr(dList),
+      list: getHotListAttr(dList,$),
     };
     list.push(ob);
   });
@@ -295,7 +295,7 @@ function getHotList($) {
 }
 
 // 获取热门数据 某一列数据
-function getHotListAttr($list) {
+function getHotListAttr($list,$) {
   let list = [];
   $list.each((inx, $item) => {
     let $dom = $($item);
@@ -321,7 +321,7 @@ function getNewList($) {
     }
     let ob = {
       title: $dom.find("h3.wrap-title").text(),
-      list: getNewListAttr(dList),
+      list: getNewListAttr(dList,$),
     };
     list.push(ob);
   });
@@ -329,7 +329,7 @@ function getNewList($) {
 }
 
 // 获取新小说数据 某一列数据
-function getNewListAttr($list) {
+function getNewListAttr($list,$) {
   let list = [];
   $list.each((inx, $item) => {
     let $dom = $($item);
