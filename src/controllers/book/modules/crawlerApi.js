@@ -222,12 +222,13 @@ exports.booksIndexList = async () => {
             return;
           }
           let $ = cheerio.load(res.body.toString());
-
+          debugger;
           let data = {
             // 榜单
             top: getTopList($),
             // 热门
             hot: getHotList($),
+            newBook: getNewList($),
           };
 
           resolve({
@@ -261,6 +262,9 @@ function getTopList($) {
   rankList.each((inx, $item) => {
     let $dom = $($item);
     let dList = $dom.find(".book-list ul li");
+    if (!dList || dList.length == 0) {
+      return;
+    }
     let ob = {
       title: $dom.find("h3.wrap-title").text(),
       href: $dom.find("h3.wrap-title a:first").attr("href"),
@@ -278,6 +282,9 @@ function getHotList($) {
   rankList.each((inx, $item) => {
     let $dom = $($item);
     let dList = $dom.find(".hot-book-list dd");
+    if (!dList || dList.length == 0) {
+      return;
+    }
     let ob = {
       title: $dom.find("h3.wrap-title").text(),
       list: getHotListAttr(dList),
@@ -296,6 +303,43 @@ function getHotListAttr($list) {
       tag: $dom.find("a:first").text(),
       title: $dom.find("a:last").text(),
       href: "https:" + $dom.find("a:last").attr("href"),
+    };
+    list.push(ob);
+  });
+  return list;
+}
+
+// 获取新小说数据
+function getNewList($) {
+  let rankList = $(".hot-classify-wrap ul li");
+  let list = [];
+  rankList.each((inx, $item) => {
+    let $dom = $($item);
+    let dList = $dom.find(".center-book-list ul li");
+    if (!dList || dList.length == 0) {
+      return;
+    }
+    let ob = {
+      title: $dom.find("h3.wrap-title").text(),
+      list: getNewListAttr(dList),
+    };
+    list.push(ob);
+  });
+  return list;
+}
+
+// 获取新小说数据 某一列数据
+function getNewListAttr($list) {
+  let list = [];
+  $list.each((inx, $item) => {
+    let $dom = $($item);
+    let $info = $dom.find(".book-info");
+    let ob = {
+      imgUrl: $dom.find(".book-img img").attr("src"),
+      title: $info.find("h3 a:first").text(),
+      href: "https:" + $info.find("h3 a:first").attr("href"),
+      desc: $info.find("p").text(),
+      author: $info.find(".author").text(),
     };
     list.push(ob);
   });
