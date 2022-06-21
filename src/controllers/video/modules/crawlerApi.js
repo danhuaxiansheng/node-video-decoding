@@ -1,6 +1,6 @@
 const cheerio = require("cheerio");
 // 异步请求
-const puppeteer = require("puppeteer"); //github传送门 官网传送门
+// const puppeteer = require("puppeteer"); //github传送门 官网传送门
 const crawler = require("crawler");
 
 // 获取爱奇艺普通视频

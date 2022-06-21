@@ -1,6 +1,6 @@
-const apiUtils = require("../../utils/apiUtils.js");
-const request = require("../../utils/request.js");
-const { setGetParams } = require("../../utils/url.js");
+const apiUtils = require("../../../utils/apiUtils.js");
+const request = require("../../../utils/request.js");
+const { setGetParams } = require("../../../utils/url.js");
 
 // 解析视频源
 exports.getUrlSourse = async (url) => {
