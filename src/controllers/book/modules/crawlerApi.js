@@ -222,7 +222,7 @@ exports.booksIndexList = async () => {
             return;
           }
           let $ = cheerio.load(res.body.toString());
-          debugger;
+
           let data = {
             // 榜单
             top: getTopList($),
@@ -230,7 +230,7 @@ exports.booksIndexList = async () => {
             hot: getHotList($),
             newBook: getNewList($),
           };
-
+          debugger;
           resolve({
             code: 200,
             data,
@@ -242,7 +242,7 @@ exports.booksIndexList = async () => {
 };
 
 // 获取榜单数据 某一列数据
-function getTopListAttr($list,$) {
+function getTopListAttr($list, $) {
   let list = [];
   $list.each((inx, $item) => {
     let $dom = $($item).find("a:first");
@@ -268,7 +268,7 @@ function getTopList($) {
     let ob = {
       title: $dom.find("h3.wrap-title").text(),
       href: $dom.find("h3.wrap-title a:first").attr("href"),
-      list: getTopListAttr(dList,$),
+      list: getTopListAttr(dList, $),
     };
     list.push(ob);
   });
@@ -287,7 +287,7 @@ function getHotList($) {
     }
     let ob = {
       title: $dom.find("h3.wrap-title").text(),
-      list: getHotListAttr(dList,$),
+      list: getHotListAttr(dList, $),
     };
     list.push(ob);
   });
@@ -295,7 +295,7 @@ function getHotList($) {
 }
 
 // 获取热门数据 某一列数据
-function getHotListAttr($list,$) {
+function getHotListAttr($list, $) {
   let list = [];
   $list.each((inx, $item) => {
     let $dom = $($item);
@@ -311,31 +311,25 @@ function getHotListAttr($list,$) {
 
 // 获取新小说数据
 function getNewList($) {
-  let rankList = $(".hot-classify-wrap ul li");
-  let list = [];
-  rankList.each((inx, $item) => {
-    let $dom = $($item);
-    let dList = $dom.find(".center-book-list ul li");
-    if (!dList || dList.length == 0) {
-      return;
-    }
-    let ob = {
-      title: $dom.find("h3.wrap-title").text(),
-      list: getNewListAttr(dList,$),
-    };
-    list.push(ob);
-  });
+  let rankList = $(".new-rec-wrap .center-book-list ul li");
+  let list = [
+    {
+      title: "新书推荐",
+      list: getNewListAttr(rankList, $),
+    },
+  ];
+
   return list;
 }
 
 // 获取新小说数据 某一列数据
-function getNewListAttr($list,$) {
+function getNewListAttr($list, $) {
   let list = [];
   $list.each((inx, $item) => {
     let $dom = $($item);
     let $info = $dom.find(".book-info");
     let ob = {
-      imgUrl: $dom.find(".book-img img").attr("src"),
+      imgUrl: "https:" + $dom.find(".book-img img").attr("src"),
       title: $info.find("h3 a:first").text(),
       href: "https:" + $info.find("h3 a:first").attr("href"),
       desc: $info.find("p").text(),
