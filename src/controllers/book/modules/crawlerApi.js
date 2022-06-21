@@ -230,7 +230,6 @@ exports.booksIndexList = async () => {
             hot: getHotList($),
             newBook: getNewList($),
           };
-          debugger;
           resolve({
             code: 200,
             data,
@@ -286,7 +285,7 @@ function getHotList($) {
       return;
     }
     let ob = {
-      title: $dom.find("h3.wrap-title").text(),
+      title: $dom.find("h3.wrap-title a:first").text(),
       list: getHotListAttr(dList, $),
     };
     list.push(ob);
