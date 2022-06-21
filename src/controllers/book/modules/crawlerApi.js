@@ -265,7 +265,7 @@ function getTopList($) {
       return;
     }
     let ob = {
-      title: $dom.find("h3.wrap-title").text(),
+      title: $dom.find("h3.wrap-title a:first").text(),
       href: $dom.find("h3.wrap-title a:first").attr("href"),
       list: getTopListAttr(dList, $),
     };
@@ -285,7 +285,7 @@ function getHotList($) {
       return;
     }
     let ob = {
-      title: $dom.find("h3.wrap-title a:first").text(),
+      title: $dom.find("h3.wrap-title").text(),
       list: getHotListAttr(dList, $),
     };
     list.push(ob);
