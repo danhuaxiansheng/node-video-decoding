@@ -1,4 +1,4 @@
-const { getMovieList } = require("../api/aiqiyi.js");
+const { getMovieList } = require("../../api/aiqiyi.js");
 const { getVideoHtmlbyAQY, getMovieIndex } = require("./modules/crawlerApi.js");
 const { getUrlSourse } = require("./modules/requestApi.js");
 
