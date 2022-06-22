@@ -67,6 +67,7 @@ exports.getBookInfo = async (url) => {
     jQuery: false,
   });
 
+  // 目录
   let getChpter = ($) => {
     const $list = $(".catalog-content-wrap .volume-wrap ul li");
 
@@ -79,12 +80,15 @@ exports.getBookInfo = async (url) => {
         href: $a.attr("href"),
         //标题
         title: $a.text().split(/[ :：]/)[1],
+        // 是否是vip章节
+        hasVip: $a.attr("href").includes("vipreader"),
       };
       chapter.push(json);
     });
     return chapter;
   };
 
+  // 书籍基础信息
   let getInfo = ($) => {
     const $panle = $(".book-detail-wrap");
     let bookInfo = {
@@ -98,7 +102,7 @@ exports.getBookInfo = async (url) => {
     };
     return bookInfo;
   };
-
+  // 书籍介绍 最近更新
   let getInfoDetail = ($) => {
     const $panle = $(".book-content-wrap .book-info-detail");
     const $newList = $panle.find(".book-state .update .charpter-container");
@@ -110,6 +114,8 @@ exports.getBookInfo = async (url) => {
       list.push({
         index: $a.text().split(/[ :：]/)[0],
         href: $a.attr("href"),
+        // 是否是vip章节
+        hasVip: $a.attr("href").includes("vipreader"),
         //标题
         title: $a.text().split(/[ :：]/)[1],
         time: $dom.find(".time").text(),
