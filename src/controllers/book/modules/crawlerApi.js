@@ -262,7 +262,7 @@ function getHotListAttr($list, $) {
     let ob = {
       tag: $dom.find("a:first").text(),
       title: $dom.find("a:last").text(),
-      href: "https:" + $dom.find("a:last").attr("href"),
+      href: $dom.find("a:last").attr("href"),
     };
     list.push(ob);
   });
@@ -289,9 +289,9 @@ function getNewListAttr($list, $) {
     let $dom = $($item);
     let $info = $dom.find(".book-info");
     let ob = {
-      imgUrl: "https:" + $dom.find(".book-img img").attr("data-original"),
+      imgUrl: $dom.find(".book-img img").attr("data-original"),
       title: $info.find("h3 a:first").text(),
-      href: "https:" + $info.find("h3 a:first").attr("href"),
+      href: $info.find("h3 a:first").attr("href"),
       desc: $info.find("p").text(),
       author: $info.find(".author").text(),
     };

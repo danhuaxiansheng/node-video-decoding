@@ -15,7 +15,6 @@ exports.getVideoHtmlbyAQY = async (url) => {
   };
 
   const crawler1 = new crawler(options);
-
   return new Promise(function (resolve, reject) {
     if (!url) {
       reject({ code: 500, msg: "参数错误!" });
@@ -32,7 +31,6 @@ exports.getVideoHtmlbyAQY = async (url) => {
           //获取文本并且解析
           let $ = cheerio.load(res.body.toString());
           let html = $.html();
-          debugger;
           //目录数组
           resolve({
             code: 200,
@@ -51,7 +49,6 @@ function htmlUtils($) {
   let movie = [];
   let variety = [];
   let tag = "";
-  debugger;
   $panle.each((inx, element) => {
     let type = element.attribs["data-block-v2"] || "";
     let $liArr = $(element).find(".qy-mod-list ul li");
