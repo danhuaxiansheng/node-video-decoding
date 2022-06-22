@@ -75,10 +75,10 @@ exports.getBookInfo = async (url) => {
       let $a = $(e).find("a");
       //书的地址
       let json = {
-        index: $a.text().split(" ")[0],
+        index: $a.text().split(/[ :：]/)[0],
         href: $a.attr("href"),
         //标题
-        title: $a.text().split(" ")[1],
+        title: $a.text().split(/[ :：]/)[1],
       };
       chapter.push(json);
     });
