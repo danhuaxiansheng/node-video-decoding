@@ -108,10 +108,10 @@ exports.getBookInfo = async (url) => {
       const $a = $dom.find("a");
 
       list.push({
-        index: $a.text().split(" ")[0],
+        index: $a.text().split(/[ :：]/)[0],
         href: $a.attr("href"),
         //标题
-        title: $a.text().split(" ")[1],
+        title: $a.text().split(/[ :：]/)[1],
         time: $dom.find(".time").text(),
       });
     });
