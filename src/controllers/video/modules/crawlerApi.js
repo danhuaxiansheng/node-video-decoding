@@ -118,7 +118,6 @@ exports.getMovieIndex = async () => {
 };
 
 exports.getMovieIndexTimeOut = () => {
-  debugger;
   const url = "https://www.iqiyi.com";
   debugger;
   return new Promise(async function (resolve, reject) {
