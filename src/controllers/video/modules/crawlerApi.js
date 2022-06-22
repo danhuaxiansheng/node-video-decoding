@@ -1,6 +1,6 @@
 const cheerio = require("cheerio");
 // 异步请求
-// const puppeteer = require("puppeteer"); //github传送门 官网传送门
+const puppeteer = require("puppeteer"); //github传送门 官网传送门
 const crawler = require("crawler");
 
 // 获取爱奇艺普通视频
@@ -81,31 +81,6 @@ function htmlUtils($) {
   return { tv, movie, variety };
 }
 
-// var getTimeOutHtml = (url) => {
-//   debugger;
-//   return new Promise(async function (resolve, reject) {
-//     const browser = await puppeteer.launch({ args: ["--no-sandbox"] });
-//     const page = await browser.newPage();
-//     await page.goto(url);
-
-//     setTimeout(async function () {
-//       const bodyHandle = await page.$("body");
-//       const html = await page.evaluate((body) => body.innerHTML, bodyHandle);
-//       let $ = cheerio.load(html);
-//       const data = htmlUtils($);
-//       await bodyHandle.dispose();
-//       await browser.close();
-
-//       //目录数组
-//       resolve({
-//         code: 200,
-//         msg: "读取完毕",
-//         data: data,
-//       });
-//     }, 500);
-//   });
-// };
-
 // 获取爱奇艺首页 热门
 exports.getMovieIndex = async () => {
   const url = "https://www.iqiyi.com";
@@ -139,5 +114,32 @@ exports.getMovieIndex = async () => {
         });
       },
     });
+  });
+};
+
+exports.getMovieIndexTimeOut = () => {
+  debugger;
+  const url = "https://www.iqiyi.com";
+  debugger;
+  return new Promise(async function (resolve, reject) {
+    const browser = await puppeteer.launch({ args: ["--no-sandbox"] });
+    const page = await browser.newPage();
+    await page.goto(url);
+
+    setTimeout(async function () {
+      const bodyHandle = await page.$("body");
+      const html = await page.evaluate((body) => body.innerHTML, bodyHandle);
+      let $ = cheerio.load(html);
+      const data = htmlUtils($);
+      await bodyHandle.dispose();
+      await browser.close();
+
+      //目录数组
+      resolve({
+        code: 200,
+        msg: "读取完毕",
+        data: data,
+      });
+    }, 500);
   });
 };
