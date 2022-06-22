@@ -51,8 +51,9 @@ function htmlUtils($) {
   let movie = [];
   let variety = [];
   let tag = "";
-  $panle.toArray().forEach((element) => {
-    let type = element.attribs["data-block-v2"];
+  debugger;
+  $panle.each((inx, element) => {
+    let type = element.attribs["data-block-v2"] || "";
     let $liArr = $(element).find(".qy-mod-list ul li");
     let list = [];
 
@@ -66,17 +67,18 @@ function htmlUtils($) {
       list = variety;
       tag = "综艺";
     }
-    $liArr.toArray().forEach((d) => {
-      let $dom = $(d);
-      let href = $dom.find(".qy-mod-link-wrap a").attr("href");
-      list.push({
-        url: href.includes("https:") ? href : "https:" + href,
-        imgSrc: $dom.find(".qy-mod-link-wrap picture img").attr("src"),
-        name: $dom.find(".title-wrap a").text(),
-        desc: $dom.find(".title-wrap .sub").text(),
-        tag: tag,
+    $liArr &&
+      $liArr.each((i, d) => {
+        let $dom = $(d);
+        let href = $dom.find(".qy-mod-link-wrap a").attr("href") ?? "";
+        list.push({
+          url: href.includes("https:") ? href : "https:" + href,
+          imgSrc: $dom.find(".qy-mod-link-wrap picture img").attr("src"),
+          name: $dom.find(".title-wrap a").text(),
+          desc: $dom.find(".title-wrap .sub").text(),
+          tag: tag,
+        });
       });
-    });
   });
   return { tv, movie, variety };
 }
