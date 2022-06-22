@@ -195,6 +195,103 @@ exports.booksListHtml = async (searchKey, url) => {
   });
 };
 
+// 获取小说说明详情，目录
+exports.getBookInfo = async (url) => {
+  var crawler_1 = new crawler({
+    encoding: null,
+    method: "get",
+    priority: 5, //queue请求优先级，模拟用户行为
+    timeout: 10000, //10s req无响应，req失败
+    maxConnections: 1, //只有在rateLimit == 0时起作用，限制并发数
+    jQuery: false,
+  });
+
+  let getChpter = ($) => {
+    const $list = $(".catalog-content-wrap .volume-wrap ul li");
+
+    let chapter = [];
+    $list.each((i, e) => {
+      let $a = $(e).find("a");
+      //书的地址
+      let json = {
+        index: $a.text().split(" ")[0],
+        href: $a.attr("href"),
+        //标题
+        title: $a.text().split(" ")[1],
+      };
+      chapter.push(json);
+    });
+    return chapter;
+  };
+
+  let getInfo = ($) => {
+    const $panle = $(".book-detail-wrap");
+    let bookInfo = {
+      title: $panle.find(".book-detail-wrap .book-img img").attr("alt"),
+      imgUrl: $panle.find(".book-detail-wrap .book-img img").attr("src"),
+      author: $panle.find(".book-info .writer").text(),
+      intro: $panle.find(".book-info .intro").text(),
+    };
+    return bookInfo;
+  };
+
+  let getInfoDetail = ($) => {
+    const $panle = $(".book-content-wrap .book-info-detail");
+    const $newList = $panle.find(".book-state .update .charpter-container");
+    let list = [];
+    $newList.each((inx, $item) => {
+      const $dom = $($item);
+      const $a = $dom.find("a");
+
+      list.push({
+        index: $a.text().split(" ")[0],
+        href: $a.attr("href"),
+        //标题
+        title: $a.text().split(" ")[1],
+        time: $dom.find(".time").text(),
+      });
+    });
+
+    let bookInfo = {
+      list: list,
+      intro: $panle.find(".book-intro").text(),
+    };
+    return bookInfo;
+  };
+
+  return new Promise(function (resolve, reject) {
+    if (!url) {
+      reject({ code: 500, msg: "参数错误!" });
+    } else {
+      crawler_1.queue({
+        //书目录地址
+        url: url,
+        //模仿客户端访问
+        headers: { Referer: url, "User-Agent": "requests" },
+        callback: function (err, res, done) {
+          if (err) {
+            reject({ code: 500, msg: "获取失败" });
+            return;
+          }
+          //获取文本并且解析
+          let $ = cheerio.load(res.body.toString());
+          resolve({
+            code: 200,
+            msg: "读取完毕",
+            data: {
+              info: getInfo($),
+              catalogList: getChpter($),
+              infoDetail: getInfoDetail($),
+            },
+          });
+        },
+      });
+    }
+  });
+};
+
+/**  获取起点 首页热门 */
+
 // 获取起点 首页
 exports.booksIndexList = async () => {
   var crawler_1 = new crawler({
@@ -328,7 +425,7 @@ function getNewListAttr($list, $) {
     let $dom = $($item);
     let $info = $dom.find(".book-info");
     let ob = {
-      imgUrl: "https:" + $dom.find(".book-img img").attr("src"),
+      imgUrl: "https:" + $dom.find(".book-img img").attr("data-original"),
       title: $info.find("h3 a:first").text(),
       href: "https:" + $info.find("h3 a:first").attr("href"),
       desc: $info.find("p").text(),
@@ -338,3 +435,5 @@ function getNewListAttr($list, $) {
   });
   return list;
 }
+
+/**  获取起点 首页热门 */

@@ -25,3 +25,8 @@ exports.getUrlSourse = async (url) => {
       });
   });
 };
+
+
+// 爱奇艺风云榜
+// GET
+// https://pcw-api.iqiyi.com/strategy/pcw/data/indexCsrData
