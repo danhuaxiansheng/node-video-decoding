@@ -227,7 +227,10 @@ exports.getBookInfo = async (url) => {
   let getInfo = ($) => {
     const $panle = $(".book-detail-wrap");
     let bookInfo = {
-      title: $panle.find(".book-detail-wrap .book-img img").attr("alt"),
+      title: $panle
+        .find(".book-detail-wrap .book-img img")
+        .attr("alt")
+        .replace("在线阅读", ""),
       imgUrl: $panle.find(".book-detail-wrap .book-img img").attr("src"),
       author: $panle.find(".book-info .writer").text(),
       intro: $panle.find(".book-info .intro").text(),
