@@ -36,11 +36,12 @@ exports.getBooksText = async (url) => {
     if (!url) {
       reject({ code: 500, msg: "参数错误!" });
     } else {
+      let nUrl = url.includes("https:") ? url : "https:" + url;
       crawler_1.queue({
         //书目录地址
-        url: url,
+        url: nUrl,
         //模仿客户端访问
-        headers: { Referer: url, "User-Agent": "requests" },
+        headers: { Referer: nUrl, "User-Agent": "requests" },
         callback: function (err, res, done) {
           if (err) {
             reject({ code: 500, msg: "获取失败" });
@@ -169,11 +170,12 @@ exports.getBookInfo = async (url) => {
     if (!url) {
       reject({ code: 500, msg: "参数错误!" });
     } else {
+      let nUrl = url.includes("https:") ? url : "https:" + url;
       crawler_1.queue({
         //书目录地址
-        url: url,
+        url: nUrl,
         //模仿客户端访问
-        headers: { Referer: url, "User-Agent": "requests" },
+        headers: { Referer: nUrl, "User-Agent": "requests" },
         callback: function (err, res, done) {
           if (err) {
             reject({ code: 500, msg: "获取失败" });
