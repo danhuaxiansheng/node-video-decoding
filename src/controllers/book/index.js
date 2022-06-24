@@ -19,21 +19,21 @@ exports.getBookIndex = async (req, res) => {
 
 // 获取小说说明/目录
 exports.getBookInfo = async (req, res) => {
-  getBookInfo(req.query.url ?? "")
+  getBookInfo(decodeURIComponent(req.query.url ?? ""))
     .then((d) => res.send({ ...success, data: d.data }))
     .catch(() => res.send(error));
 };
 
 // 获取免费内容正文
 exports.getFreeContent = async (req, res) => {
-  getFreeContent(req.query.contentUrl ?? "")
+  getFreeContent(decodeURIComponent(req.query.contentUrl ?? ""))
     .then((d) => res.send({ ...success, data: d.data }))
     .catch(() => res.send(error));
 };
 
 // 获取文章内容
 exports.getBooksText = async (req, res) => {
-  getBooksText(req.query.url ?? "")
+  getBooksText(decodeURIComponent(req.query.url ?? ""))
     .then((d) => res.send({ ...success, data: d.data }))
     .catch(() => res.send(error));
 };

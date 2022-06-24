@@ -14,21 +14,21 @@ exports.getMovieIndex = async (req, res) => {
 
 // 获取爱奇艺的所有视频列表
 exports.getDataList = async (req, res) => {
-  getMovieList(req.query.keywords)
+  getMovieList(decodeURIComponent(req.query.keywords))
     .then((d) => res.send({ ...success, data: d.data }))
     .catch(() => res.send(error));
 };
 
 // 爱奇艺 免费视频 iframe
 exports.getVideoHtmlbyAQY = async (req, res) => {
-  getVideoHtmlbyAQY(req.query.url)
+  getVideoHtmlbyAQY(decodeURIComponent(req.query.url))
     .then((d) => res.send({ ...success, data: d.data }))
     .catch(() => res.send(error));
 };
 
 // 通过url映射数据源
 exports.getUrlSourse = async (req, res) => {
-  getUrlSourse(req.query.url)
+  getUrlSourse(decodeURIComponent(req.query.url) || "")
     .then((d) => res.send({ ...success, data: d.data }))
     .catch(() => res.send(error));
 };
