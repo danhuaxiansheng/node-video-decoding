@@ -133,6 +133,7 @@ exports.getBookInfo = async (url) => {
         .find(".book-detail-wrap .book-img img")
         .attr("alt")
         .replace("在线阅读", ""),
+      bookUrl: url,
       imgUrl: $panle.find(".book-detail-wrap .book-img img").attr("src"),
       author: $panle.find(".book-info .writer").text(),
       intro: $panle.find(".book-info .intro").text(),
