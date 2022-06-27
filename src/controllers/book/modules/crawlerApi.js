@@ -148,21 +148,20 @@ exports.getBookInfo = async (url) => {
     $newList.each((inx, $item) => {
       const $dom = $($item);
       const $a = $dom.find("a");
-
       list.push({
-        index: $a.text().split(/[ :：]/)[0],
+        index: $a.text().split(" ")[0],
         href: $a.attr("href"),
         // 是否是vip章节
         hasVip: $a.attr("href").includes("vipreader"),
         //标题
-        title: $a.text().split(/[ :：]/)[1],
+        title: $a.text().split(" ")[1],
         time: $dom.find(".time").text(),
       });
     });
 
     let bookInfo = {
       list: list,
-      intro: $panle.find(".book-intro").text(),
+      intro: $panle.find(".book-intro p").html(),
     };
     return bookInfo;
   };
