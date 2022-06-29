@@ -103,7 +103,7 @@ exports.getBookInfo = async (url) => {
     maxConnections: 1, //只有在rateLimit == 0时起作用，限制并发数
     jQuery: false,
   });
-  debugger;
+
   // 目录
   let getChpter = ($) => {
     const $list = $(".catalog-content-wrap .volume-wrap ul li");
@@ -172,7 +172,13 @@ exports.getBookInfo = async (url) => {
         //书目录地址
         url: nUrl,
         //模仿客户端访问
-        headers: { Referer: nUrl, "User-Agent": "requests" },
+        headers: {
+          Referer: nUrl,
+          "User-Agent": "requests",
+          "Content-Type": "text/html; charset=utf-8",
+          "Cache-Control": " max-age=0",
+          Host: "book.qidian.com",
+        },
         callback: function (err, res, done) {
           if (err) {
             reject({ code: 500, msg: "获取失败" });
@@ -180,6 +186,7 @@ exports.getBookInfo = async (url) => {
           }
           //获取文本并且解析
           let $ = cheerio.load(res.body.toString());
+          debugger;
           resolve({
             code: 200,
             msg: "读取完毕",
