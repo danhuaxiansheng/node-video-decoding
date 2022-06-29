@@ -103,7 +103,7 @@ exports.getBookInfo = async (url) => {
     maxConnections: 1, //只有在rateLimit == 0时起作用，限制并发数
     jQuery: false,
   });
-
+  debugger;
   // 目录
   let getChpter = ($) => {
     const $list = $(".catalog-content-wrap .volume-wrap ul li");
@@ -127,11 +127,11 @@ exports.getBookInfo = async (url) => {
 
   // 书籍基础信息
   let getInfo = ($) => {
-    const $panle = $(".book-detail-wrap");
+    const $panle = $(".book-detail-wrap .book-information");
     let bookInfo = {
       title: $panle.find(".book-info h1 em").text(),
       bookUrl: url,
-      imgSrc: $panle.find(".book-detail-wrap .book-img img").attr("src"),
+      imgSrc: $panle.find(".book-img img").attr("src"),
       author: $panle.find(".book-info .writer").text(),
       intro: $panle.find(".book-info .intro").text(),
     };
