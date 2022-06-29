@@ -134,7 +134,7 @@ exports.getBookInfo = async (url) => {
         .attr("alt")
         .replace("在线阅读", ""),
       bookUrl: url,
-      imgUrl: $panle.find(".book-detail-wrap .book-img img").attr("src"),
+      imgSrc: $panle.find(".book-detail-wrap .book-img img").attr("src"),
       author: $panle.find(".book-info .writer").text(),
       intro: $panle.find(".book-info .intro").text(),
     };
@@ -333,7 +333,7 @@ function getNewListAttr($list, $) {
     let $dom = $($item);
     let $info = $dom.find(".book-info");
     let ob = {
-      imgUrl: $dom.find(".book-img img").attr("data-original"),
+      imgSrc: $dom.find(".book-img img").attr("data-original"),
       title: $info.find("h3 a:first").text(),
       href: $info.find("h3 a:first").attr("href"),
       desc: $info.find("p").text(),
@@ -381,7 +381,7 @@ exports.getDataList = async (key) => {
             let $dom = $($item);
             let $info = $dom.find(".book-mid-info");
             let ob = {
-              imgUrl: $dom.find(".book-img-box img").attr("src"),
+              imgSrc: $dom.find(".book-img-box img").attr("src"),
               title: $info.find(".book-info-title").text(),
               href: $info.find(".book-info-title a:first").attr("href"),
               desc: $info.find(".intro").text(),
