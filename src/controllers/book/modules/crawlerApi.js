@@ -372,12 +372,28 @@ exports.getDataList = async (key) => {
             reject({ code: 500, msg: "获取失败" });
             return;
           }
-          debugger;
+
           let $ = cheerio.load(res.body.toString());
           //把标题加入到每一张的前面
           let $list = $("#result-list li.res-book-item");
+          let list = [];
+          $list.each((inx, $item) => {
+            let $dom = $($item);
+            let $info = $dom.find(".book-mid-info");
+            let ob = {
+              imgUrl: $dom.find(".book-img-box img").attr("src"),
+              title: $info.find(".book-info-title").text(),
+              href: $info.find(".book-info-title a:first").attr("href"),
+              desc: $info.find(".intro").text(),
+              author: $info.find(".author .name").text(),
+              newIndex: $info.find(".update a").text().replace("最新更新 ", ""),
+              newIndexUrl: $info.find(".update a").attr("href"),
+              newIndexTime: $info.find(".update span").text()
+            };
+            list.push(ob);
+          });
 
-          resolve({ code: 200, msg: "获取成功", data: content });
+          resolve({ code: 200, msg: "获取成功", data: list });
         },
       });
     }
