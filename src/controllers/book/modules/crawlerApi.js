@@ -129,10 +129,7 @@ exports.getBookInfo = async (url) => {
   let getInfo = ($) => {
     const $panle = $(".book-detail-wrap");
     let bookInfo = {
-      title: $panle
-        .find(".book-detail-wrap .book-img img")
-        .attr("alt")
-        .replace("在线阅读", ""),
+      title: $panle.find(".book-info h1 em").text(),
       bookUrl: url,
       imgSrc: $panle.find(".book-detail-wrap .book-img img").attr("src"),
       author: $panle.find(".book-info .writer").text(),
@@ -386,9 +383,13 @@ exports.getDataList = async (key) => {
               href: $info.find(".book-info-title a:first").attr("href"),
               desc: $info.find(".intro").text(),
               author: $info.find(".author .name").text(),
-              newIndex: $info.find(".update a").text().replace("最新更新 ", "").trim(),
+              newIndex: $info
+                .find(".update a")
+                .text()
+                .replace("最新更新 ", "")
+                .trim(),
               newIndexUrl: $info.find(".update a").attr("href"),
-              newIndexTime: $info.find(".update span").text()
+              newIndexTime: $info.find(".update span").text(),
             };
             list.push(ob);
           });
