@@ -5,6 +5,7 @@ const {
   booksIndexList,
   getBookInfo,
   getFreeContent,
+  getDataList,
 } = require("./modules/crawlerApi.js");
 
 const error = { code: 500, msg: "接口查询失败。" };
@@ -13,6 +14,13 @@ const success = { code: 200, msg: "查询成功。" };
 // 获取首页内容
 exports.getBookIndex = async (req, res) => {
   booksIndexList()
+    .then((d) => res.send({ ...success, data: d.data }))
+    .catch(() => res.send(error));
+};
+
+// 获取小说查询结果
+exports.getDataList = async (req, res) => {
+  getDataList(req.query.keywords ?? "")
     .then((d) => res.send({ ...success, data: d.data }))
     .catch(() => res.send(error));
 };

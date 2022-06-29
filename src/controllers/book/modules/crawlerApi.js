@@ -345,3 +345,41 @@ function getNewListAttr($list, $) {
 }
 
 /**  获取起点 首页热门 */
+
+// 获取小说查询结果
+exports.getDataList = async (key) => {
+  var crawler_1 = new crawler({
+    encoding: null,
+    method: "get",
+    priority: 5, //queue请求优先级，模拟用户行为
+    timeout: 10000, //10s req无响应，req失败
+    maxConnections: 1, //只有在rateLimit == 0时起作用，限制并发数
+    jQuery: false,
+  });
+
+  return new Promise(function (resolve, reject) {
+    if (!key) {
+      reject({ code: 500, msg: "参数错误!" });
+    } else {
+      let nUrl = "https://www.qidian.com/soushu/" + encodeURI(key) + ".html";
+      crawler_1.queue({
+        //书目录地址
+        url: nUrl,
+        //模仿客户端访问
+        headers: { Referer: nUrl, "User-Agent": "requests" },
+        callback: function (err, res, done) {
+          if (err) {
+            reject({ code: 500, msg: "获取失败" });
+            return;
+          }
+          debugger;
+          let $ = cheerio.load(res.body.toString());
+          //把标题加入到每一张的前面
+          let $list = $("#result-list li.res-book-item");
+
+          resolve({ code: 200, msg: "获取成功", data: content });
+        },
+      });
+    }
+  });
+};
