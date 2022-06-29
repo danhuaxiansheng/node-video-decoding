@@ -382,11 +382,11 @@ exports.getDataList = async (key) => {
             let $info = $dom.find(".book-mid-info");
             let ob = {
               imgSrc: $dom.find(".book-img-box img").attr("src"),
-              title: $info.find(".book-info-title").text(),
+              title: $info.find(".book-info-title").text().trim(),
               href: $info.find(".book-info-title a:first").attr("href"),
               desc: $info.find(".intro").text(),
               author: $info.find(".author .name").text(),
-              newIndex: $info.find(".update a").text().replace("最新更新 ", ""),
+              newIndex: $info.find(".update a").text().replace("最新更新 ", "").trim(),
               newIndexUrl: $info.find(".update a").attr("href"),
               newIndexTime: $info.find(".update span").text()
             };
