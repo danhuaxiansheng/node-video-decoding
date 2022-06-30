@@ -1,38 +1,18 @@
-// 引入multer中间件，用于处理上传的文件数据
-const multer = require("multer");
-// 引入body-parser中间件，用来处理post请求体body中的数据
-const bodyParser = require("body-parser");
-// 处理跨域
-const cors = require("cors");
-
-const path = require("path");
-
 //引入express框架	返回值其实是一个方法
 //再创建服务器就不需要再引用http模块的createHttp方法了。
 const express = require("express");
-
-const app = express();
 const http = require("http");
 
-// 允许跨域
-app.use(cors());
-// 读取静态资源
-app.use(express.static(path.join(__dirname, "public")));
-// parse requests of content-type - application/json
-app.use(bodyParser.json({ limit: "50mb" }));
-// parse requests of content-type - application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
+const { port } = require("./src/setting");
+const app = express();
 
-// 通过配置multer的dest属性， 将文件储存在项目下的tmp文件中
-app.use(multer({ dest: "./public/temp/" }).any());
+// 引用各类中间件
+require("./src/rely.js")(app);
 
 //错误处理中间件    err就是错误对象
 app.use((err, req, res, next) => {
   res.status(500).send("服务器出错");
 });
-
-const { port } = require("./src/setting");
-app.set("port", port || 3000);
 
 //设置跨域访问
 app.all("*", function (req, res, next) {
@@ -61,6 +41,9 @@ app.all("*", function (req, res, next) {
 
 // 加载路由
 require("./src/routes/index.js")(app);
+
+// 设置服务启动端口
+app.set("port", port || 3000);
 
 http.createServer(app).listen(app.get("port"), function () {
   console.log("服务器已经启动: http://localhost:" + app.get("port"));
