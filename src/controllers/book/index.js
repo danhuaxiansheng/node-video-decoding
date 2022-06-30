@@ -3,10 +3,12 @@
 const {
   getBooksText,
   booksIndexList,
-  getBookInfo,
   getFreeContent,
+  getBookInfo,
   getDataList,
 } = require("./modules/crawlerApi.js");
+
+// const { getBookInfo } = require("./modules/requestApi.js");
 
 const error = { code: 500, msg: "接口查询失败。" };
 const success = { code: 200, msg: "查询成功。" };

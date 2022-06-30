@@ -175,9 +175,9 @@ exports.getBookInfo = async (url) => {
         headers: {
           Referer: nUrl,
           "User-Agent": "requests",
-          "Content-Type": "text/html; charset=utf-8",
-          "Cache-Control": " max-age=0",
-          Host: "book.qidian.com",
+          // "Content-Type": "text/html; charset=utf-8",
+          // "Cache-Control": " max-age=0",
+          // Host: "book.qidian.com",
         },
         callback: function (err, res, done) {
           if (err) {
@@ -186,7 +186,6 @@ exports.getBookInfo = async (url) => {
           }
           //获取文本并且解析
           let $ = cheerio.load(res.body.toString());
-          debugger;
           resolve({
             code: 200,
             msg: "读取完毕",

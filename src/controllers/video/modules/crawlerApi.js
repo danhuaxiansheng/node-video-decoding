@@ -118,7 +118,6 @@ exports.getMovieIndex = async () => {
 
 exports.getMovieIndexTimeOut = () => {
   const url = "https://www.iqiyi.com";
-  debugger;
   return new Promise(async function (resolve, reject) {
     const browser = await puppeteer.launch({ args: ["--no-sandbox"] });
     const page = await browser.newPage();
