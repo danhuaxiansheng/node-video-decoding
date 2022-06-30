@@ -7,6 +7,9 @@ const cors = require("cors");
 // 服务器相对路径
 const path = require("path");
 
+// 引入express框架
+const express = require("express");
+
 module.exports = function (app) {
   // 允许跨域
   app.use(cors());
