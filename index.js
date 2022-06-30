@@ -26,6 +26,11 @@ app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 // 通过配置multer的dest属性， 将文件储存在项目下的tmp文件中
 app.use(multer({ dest: "./public/temp/" }).any());
 
+//错误处理中间件    err就是错误对象
+app.use((err, req, res, next) => {
+  res.status(500).send("服务器出错");
+});
+
 const { port } = require("./src/setting");
 app.set("port", port || 3000);
 
