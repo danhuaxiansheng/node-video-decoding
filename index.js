@@ -5,12 +5,15 @@ const bodyParser = require("body-parser");
 
 const path = require("path");
 const express = require("express");
+// 处理跨域
+const cors = require("cors");
+
 const app = express();
 const http = require("http");
 
 const { port } = require("./src/setting");
 
-app.set('port', port || 3000);
+app.set("port", port || 3000);
 
 //设置跨域访问
 app.all("*", function (req, res, next) {
@@ -29,6 +32,8 @@ app.all("*", function (req, res, next) {
   else next();
 });
 
+// 允许跨域
+app.use(cors());
 // 读取静态资源
 app.use(express.static(path.join(__dirname, "public")));
 // parse requests of content-type - application/json
@@ -41,6 +46,6 @@ app.use(multer({ dest: "./public/temp/" }).any());
 
 require("./src/routes/index.js")(app);
 
-http.createServer(app).listen(app.get('port'), function(){
-  console.log("服务器已经启动: http://localhost:" + app.get('port'));
- });
+http.createServer(app).listen(app.get("port"), function () {
+  console.log("服务器已经启动: http://localhost:" + app.get("port"));
+});
