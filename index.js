@@ -51,6 +51,14 @@ app.all("*", function (req, res, next) {
   else next();
 });
 
+// 路由设置
+// 在地址后面用冒号标识的即代表路由参数，如id等在这里表示占位符。
+// 浏览器输入路径localhoat:3000/index/10/张三/56，输出{“id”:“10”,“name”:“张三”,“age”:“56”}
+// app.get("'/index/:id/:name/:age'",(req,res)=>{
+//   //req.params获取请求参数
+//   res.send(req.params);
+// })
+
 // 加载路由
 require("./src/routes/index.js")(app);
 
