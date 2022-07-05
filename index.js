@@ -5,7 +5,6 @@ const http = require("http");
 
 const { port } = require("./src/setting");
 const app = express();
-
 // 引用各类中间件
 require("./src/rely.js")(app);
 

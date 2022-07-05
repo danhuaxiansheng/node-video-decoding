@@ -13,7 +13,6 @@ module.exports = function (app) {
     // 根据函数前缀 判断是get还是post
     app[d.includes("get") ? "get" : "post"](videoDic + d, Video[d]);
   });
-
   Object.keys(Book).forEach((d) => {
     // 根据函数前缀 判断是get还是post
     app[d.includes("get") ? "get" : "post"](bookDic + d, Book[d]);
