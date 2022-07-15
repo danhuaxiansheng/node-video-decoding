@@ -6,6 +6,7 @@ const { setGetParams } = require("../../../utils/url.js");
 exports.getUrlSourse = async (url) => {
   let sourseModel = apiUtils.getSourseUrl(url);
   let apiUrl = setGetParams(sourseModel.url, sourseModel.params);
+  debugger;
   return new Promise(function (resolve, reject) {
     request
       .get(apiUrl)
@@ -21,11 +22,10 @@ exports.getUrlSourse = async (url) => {
         resolve({ code: 200, msg: "查询成功。", data: data });
       })
       .catch((d) => {
-        reject({ code: 500, msg: "请求失败" });
+        reject({ code: 500, msg: "当前接口连接失败。" });
       });
   });
 };
-
 
 // 爱奇艺风云榜
 // GET

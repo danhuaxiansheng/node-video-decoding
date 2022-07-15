@@ -3,7 +3,9 @@ class ApiUtils {
   getSourseUrl(url) {
     let obj = this.getParams(url);
     return {
-      url: "a1.m1907.cn:404/api/v/",
+      // url: "a1.m1907.cn:404/api/v/",
+      url: "https://a1.m1907.cn:404/api/v/",
+      // url: "https:110.43.128.104:404/api/v/",
       params: obj,
     };
   }

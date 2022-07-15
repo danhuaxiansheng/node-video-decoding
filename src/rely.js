@@ -3,7 +3,7 @@ const multer = require("multer");
 // 引入body-parser中间件，用来处理post请求体body中的数据
 const bodyParser = require("body-parser");
 // 处理跨域
-const cors = require("cors");
+// const cors = require("cors");
 // 服务器相对路径
 const path = require("path");
 // 引入express框架
@@ -11,7 +11,7 @@ const express = require("express");
 
 module.exports = function (app) {
   // 允许跨域
-  app.use(cors());
+  // app.use(cors());
   // 读取静态资源
   app.use(express.static(path.join(__dirname, "public")));
   // parse requests of content-type - application/json
