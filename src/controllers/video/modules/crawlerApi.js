@@ -106,12 +106,17 @@ exports.getMovieIndex = async () => {
         }
         //获取文本并且解析
         const $ = cheerio.load(res.body.toString());
-        const data = htmlUtils($);
+        const scriptCode = $("script")[0].children[0].data.replace(
+          "window.__NUXT__=",
+          ""
+        );
+        const esData = eval(scriptCode);
+        // const data = htmlUtils($);
         //目录数组
         resolve({
           code: 200,
           msg: "读取完毕",
-          data: data,
+          data: esData?.data[0].sourceData ?? {},
         });
       },
     });
