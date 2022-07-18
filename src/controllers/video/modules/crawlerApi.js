@@ -74,6 +74,8 @@ function htmlUtils($) {
           name: $dom.find(".title-wrap a").text(),
           desc: $dom.find(".title-wrap .sub").text(),
           tag: tag,
+          score: $dom.find(".label-score").text(),
+          number: $dom.find(".qy-mod-label").text(),
         });
       });
   });
