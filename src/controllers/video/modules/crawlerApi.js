@@ -43,45 +43,6 @@ exports.getVideoHtmlbyAQY = async (url) => {
   });
 };
 
-function htmlUtils($) {
-  const $panle = $(".content-wrap .ch-res>.tl-layout[data-block-v2]");
-  let tv = [];
-  let movie = [];
-  let variety = [];
-  let tag = "";
-  $panle.each((inx, element) => {
-    let type = element.attribs["data-block-v2"] || "";
-    let $liArr = $(element).find(".qy-mod-list ul li");
-    let list = [];
-
-    if (type.includes("dianshiju")) {
-      list = tv;
-      tag = "电视剧";
-    } else if (type.includes("dianying")) {
-      list = movie;
-      tag = "电影";
-    } else if (type.includes("zongyi")) {
-      list = variety;
-      tag = "综艺";
-    }
-    $liArr &&
-      $liArr.each((i, d) => {
-        let $dom = $(d);
-        let href = $dom.find(".qy-mod-link-wrap a").attr("href") ?? "";
-        list.push({
-          url: href.includes("https:") ? href : "https:" + href,
-          imgSrc: $dom.find(".qy-mod-link-wrap picture img").attr("src"),
-          name: $dom.find(".title-wrap a").text(),
-          desc: $dom.find(".title-wrap .sub").text(),
-          tag: tag,
-          score: $dom.find(".label-score").text(),
-          number: $dom.find(".qy-mod-label").text(),
-        });
-      });
-  });
-  return { tv, movie, variety };
-}
-
 // 获取爱奇艺首页 热门
 exports.getMovieIndex = async () => {
   const url = "https://www.iqiyi.com";
@@ -111,7 +72,6 @@ exports.getMovieIndex = async () => {
           ""
         );
         const esData = eval(scriptCode);
-        // const data = htmlUtils($);
         //目录数组
         resolve({
           code: 200,
@@ -120,30 +80,5 @@ exports.getMovieIndex = async () => {
         });
       },
     });
-  });
-};
-
-exports.getMovieIndexTimeOut = () => {
-  const url = "https://www.iqiyi.com";
-  return new Promise(async function (resolve, reject) {
-    const browser = await puppeteer.launch({ args: ["--no-sandbox"] });
-    const page = await browser.newPage();
-    await page.goto(url);
-
-    setTimeout(async function () {
-      const bodyHandle = await page.$("body");
-      const html = await page.evaluate((body) => body.innerHTML, bodyHandle);
-      let $ = cheerio.load(html);
-      const data = htmlUtils($);
-      await bodyHandle.dispose();
-      await browser.close();
-
-      //目录数组
-      resolve({
-        code: 200,
-        msg: "读取完毕",
-        data: data,
-      });
-    }, 500);
   });
 };
