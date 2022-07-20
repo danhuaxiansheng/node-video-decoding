@@ -9,16 +9,18 @@ class Request {
 
   getHeaders(host, postData) {
     let headers = {
-      Host: host,
+      // Host: host,
       Pragma: "no-cache",
       Connection: "keep-alive",
       "Cache-Control": "no-cache",
+      accept:
+        "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
       "Content-Type": "application/x-www-form-urlencoded",
-      "Accept-Language": "zh-CN,zh;q=0.8,en;q=0.6,zh-TW;q=0.4,es;q=0.2",
+      "Accept-Language": "zh-CN,zh;q=0.9",
       Accept:
         "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
       "User-Agent":
-        "Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1",
+        "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36",
     };
     if (postData != "") {
       headers["Content-Length"] = Buffer.byteLength(postData);
@@ -32,7 +34,7 @@ class Request {
     let protocol = urlObj.protocol;
     let options = {
       hostname: urlObj.host,
-      port: urlObj.port,
+      // port: urlObj.port,
       path: urlObj.path,
       method: method,
       headers: this.getHeaders(urlObj.host, postData),

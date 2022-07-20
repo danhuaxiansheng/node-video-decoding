@@ -6,7 +6,6 @@ const { setGetParams } = require("../../../utils/url.js");
 exports.getUrlSourse = async (url) => {
   let sourseModel = apiUtils.getSourseUrl(url);
   let apiUrl = setGetParams(sourseModel.url, sourseModel.params);
-  debugger;
   return new Promise(function (resolve, reject) {
     request
       .get(apiUrl)
@@ -26,7 +25,3 @@ exports.getUrlSourse = async (url) => {
       });
   });
 };
-
-// 爱奇艺风云榜
-// GET
-// https://pcw-api.iqiyi.com/strategy/pcw/data/indexCsrData

@@ -1,6 +1,10 @@
 const { getMovieList } = require("../../api/aiqiyi.js");
-const { getVideoHtmlbyAQY, getMovieIndex } = require("./modules/crawlerApi.js");
-const { getUrlSourse } = require("./modules/requestApi.js");
+const {
+  getVideoHtmlbyAQY,
+  getMovieIndex,
+  getUrlSourse,
+} = require("./modules/crawlerApi.js");
+// const { getUrlSourse } = require("./modules/requestApi.js");
 
 const error = { code: 500, msg: "接口查询失败。" };
 const success = { code: 200, msg: "查询成功。" };
