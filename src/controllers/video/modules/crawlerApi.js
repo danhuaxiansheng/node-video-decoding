@@ -55,7 +55,9 @@ exports.getUrlSourse = async (url) => {
     maxConnections: 1, //只有在rateLimit == 0时起作用，限制并发数
     jQuery: false,
   };
-  let sourseModel = apiUtils.getSourseUrl(url);
+
+  let nUrl = url.includes("https:") ? url : "https:" + url;
+  let sourseModel = apiUtils.getSourseUrl(nUrl);
   let apiUrl = setGetParams(sourseModel.url, sourseModel.params);
   const crawler1 = new crawler(options);
   return new Promise(function (resolve, reject) {
