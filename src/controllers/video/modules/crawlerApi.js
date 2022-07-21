@@ -71,10 +71,10 @@ exports.getUrlSourse = async (url) => {
             reject({ code: 500, msg: "获取失败" });
             return;
           }
-
           //获取文本并且解析
           let $ = cheerio.load(res.body.toString());
-          let data = JSON.parse($("body").text()).data;
+          let sdata = JSON.parse($("body").text());
+          let data = sdata.data || [];
           data = data.map((d) => {
             return {
               name: d.name,
